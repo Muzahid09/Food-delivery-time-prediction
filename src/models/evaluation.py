@@ -72,8 +72,8 @@ if __name__ == "__main__":
     # root path
     root_path = Path(__file__).parent.parent.parent
     # train data load path
-    train_data_path = root_path / "data" / "processed" / "train_trans.csv"
-    test_data_path = root_path / "data" / "processed" / "test_trans.csv"
+    train_data_path = root_path / "data" / "interim" / "train.csv"
+    test_data_path = root_path / "data" / "interim" / "test.csv"
     # model path
     model_path = root_path / "models" / "model.joblib"
     
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     mean_cv_score = -(cv_scores.mean())
     
     # log with mlflow
-    with mlflow.start_run() as run:
+    with mlflow.start_run(run_name='without data leakage') as run:
         # set tags
         mlflow.set_tag("model","Food Delivery Time Regressor")
 

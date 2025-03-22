@@ -37,7 +37,7 @@ stages:
     cmd: python src/models/train.py
     deps:
     - src/models/train.py
-    - data/processed/train_trans.csv
+    - data/interim/train.csv
     params:
     - Train.Random_Forest
     - Train.LightGBM
@@ -51,8 +51,8 @@ stages:
     cmd: python src/models/evaluation.py
     deps:
     - src/models/evaluation.py
-    - data/processed/train_trans.csv
-    - data/processed/test_trans.csv
+    - data/interim/train.csv
+    - data/interim/test.csv
     - models/model.joblib
     outs:
     - run_information.json

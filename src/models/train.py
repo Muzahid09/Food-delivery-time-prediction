@@ -9,6 +9,11 @@ from lightgbm import LGBMRegressor
 from sklearn.linear_model import LinearRegression
 from pathlib import Path
 from sklearn.ensemble import StackingRegressor
+from sklearn.pipeline import Pipeline
+from sklearn import set_config
+
+# set the transformer outputs to pandas
+set_config(transform_output='pandas')
 
 TARGET = "time_taken"
 
@@ -71,22 +76,36 @@ def make_X_and_y(data:pd.DataFrame, target_column: str):
     return X, y
 
 
+def load_preprocessor(file_path: Path):
+
+    preprocessor = joblib.load(file_path)
+
+    return preprocessor
+
+
 
 if __name__ == "__main__":
     # root path
     root_path = Path(__file__).parent.parent.parent
     # train data load path
-    data_path = root_path / "data" / "processed" / "train_trans.csv"
+    data_path_precessed = root_path / "data" / "processed" / "train_trans.csv"
+     # train data load path before transformation
+    data_path_intrim = root_path / "data" / "interim" / 'train.csv'
+    #preprocessor path
+    preprocessor_path = root_path / "models" / "preprocessor.joblib"
     # parameters file
     params_file_path = root_path / "params.yaml"
     
     # load the training data
-    training_data = load_data(data_path)
-    logger.info("Training Data read successfully")
+    training_data = load_data(data_path_intrim)
+    logger.info("Training Data without transformation read successfully")
     
     # split the data into X and y
     X_train, y_train = make_X_and_y(training_data, TARGET)
     logger.info("Dataset splitting completed")
+
+    #loading the preprocessor
+    preprocessor = load_preprocessor(preprocessor_path)
     
     # model parameters
     model_params = read_params(params_file_path)['Train']
@@ -102,6 +121,8 @@ if __name__ == "__main__":
     # light gbm params
     lgbm_params = model_params["LightGBM"]
     logger.info("Light GBM parameters read")
+
+    # build light gbm model
     lgbm = LGBMRegressor(**lgbm_params)
     logger.info("built Light GBM model")
     
@@ -112,10 +133,25 @@ if __name__ == "__main__":
     # power transformer
     power_transform = PowerTransformer()
     logger.info("Target Transformer built")
+
+
+    #lgbm Base estimator skleran pipeline
+    lgbm_pipeline = Pipeline([('preprocess_data',preprocessor),
+                              ('lgbm_regressor',lgbm)])
+    logger.info("light_gbm pipeline built")
+
+
+    #RF Base estimator skleran pipeline
+    RF_pipeline = Pipeline([('preprocess_data',preprocessor),
+                              ('RF_regressorr',rf)])
+    logger.info("Random_forest pipeline built")
+
+
     
+
     # form the stacking regressor
-    stacking_reg = StackingRegressor(estimators=[("rf_model",rf),
-                                                 ("lgbm_model",lgbm)],
+    stacking_reg = StackingRegressor(estimators=[("rf_model",RF_pipeline),
+                                                 ("lgbm_model",lgbm_pipeline)],
                                      final_estimator=lr,
                                      cv=5,n_jobs=-1)
     logger.info("Stacking regressor built")
