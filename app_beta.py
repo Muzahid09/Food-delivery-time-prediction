@@ -53,27 +53,6 @@ def load_model_information(file_path):
     return run_info
 
 
-def load_transformer(transformer_path):
-    transformer = joblib.load(transformer_path)
-    return transformer
-
-
-
-# columns to preprocess in data
-num_cols = ["age",
-            "ratings",
-            "pickup_time_minutes",
-            "distance"]
-
-nominal_cat_cols = ['weather',
-                    'type_of_order',
-                    'type_of_vehicle',
-                    "festival",
-                    "city_type",
-                    "is_weekend",
-                    "order_time_of_day"]
-
-ordinal_cat_cols = ["traffic","distance_type"]
 
 #mlflow client
 client = MlflowClient()
@@ -84,9 +63,6 @@ model_name = load_model_information("run_information.json")['model_name']
 # stage of the model
 stage = "Production"
 
-# get the latest model version
-# latest_model_ver = client.get_latest_versions(name=model_name,stages=[stage])
-# print(f"Latest model in production is version {latest_model_ver[0].version}")
 
 # load model path
 model_path = f"models:/{model_name}/{stage}"
@@ -94,15 +70,7 @@ model_path = f"models:/{model_name}/{stage}"
 # load the latest model from model registry
 model = mlflow.sklearn.load_model(model_path)
 
-# load the preprocessor
-preprocessor_path = "models/preprocessor.joblib"
-preprocessor = load_transformer(preprocessor_path)
 
-# build the model pipeline
-model_pipe = Pipeline(steps=[
-    ('preprocess',preprocessor),
-    ("regressor",model)
-])
 
 # create the app
 app = FastAPI()
@@ -140,7 +108,7 @@ def do_predictions(data: Data):
     # clean the raw input data
     cleaned_data = perform_data_cleaning(pred_data)
     # get the predictions
-    predictions = model_pipe.predict(cleaned_data)[0]
+    predictions = model.predict(cleaned_data)[0]
 
     return predictions
    
