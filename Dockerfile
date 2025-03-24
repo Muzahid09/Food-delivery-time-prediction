@@ -18,7 +18,6 @@ RUN pip install -r requirements-docker.txt
 # Copy other necessary files
 COPY /app_beta.py ./
 COPY ./scripts/data_clean_utils.py ./scripts/data_clean_utils.py
-COPY ./models/preprocessor.joblib ./models/preprocessor.joblib
 COPY ./run_information.json ./
 
 
