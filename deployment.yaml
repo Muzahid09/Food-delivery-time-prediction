@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: delivery-time-deploy
+  name: delivery-time-deploy-v2
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: delivery-time-pod
@@ -16,18 +16,18 @@ spec:
         node-role.kubernetes.io/worker: ""  # Ensures pods only go to worker nodes
       containers:
       - name: delivery-time
-        image: myapp:v2
+        image: delivery_time:v2
         imagePullPolicy: Never
         env:
         - name: DAGSHUB_USER_TOKEN
           valueFrom:
             secretKeyRef:
               name: dagshub-secret
-              key: DAGSHUB_USER_TOKEN
+              key: my_key
         resources:
           limits:
-            memory: "1000Mi"
-            cpu: "500m"
+            memory: "600Mi"
+            cpu: "250m"
         ports:
         - containerPort: 8000
 
@@ -40,9 +40,10 @@ kind: Service
 metadata:
   name: delivery-time-service
 spec:
+  # type: NodePort
   selector:
     app: delivery-time-pod
   ports:
   - port: 1234
     targetPort: 8000
-
+    # nodePort: 30001

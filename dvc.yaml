@@ -38,6 +38,7 @@ stages:
     deps:
     - src/models/train.py
     - data/interim/train.csv
+    - models/preprocessor.joblib
     params:
     - Train.Random_Forest
     - Train.LightGBM
