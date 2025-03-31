@@ -1,4 +1,9 @@
 ## Food-delivery-time-prediction
+
+This project is documented in a Medium blog series:
+- **[Part 1: From Colab to a Reproducible Pipeline](https://medium.com/@muzahid023/mlops-part-1-from-colab-to-a-reproducible-pipeline-for-food-delivery-prediction-6abce16dd8b7)**: Focuses on experiment tracking, pipeline automation, and versioning.
+
+  
 ==============================
 
 ## 📌Project Overview
