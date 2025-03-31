@@ -1,7 +1,74 @@
-Swiggy-delivery-time-prediction
+## Food-delivery-time-prediction
 ==============================
 
-Biuld a ML service that predicts food delivery time
+## Project Overview
+
+This repository contains my implementation of a machine learning pipeline to predict food delivery times in minutes, built with an MLOps approach. The goal was to create a reliable, reproducible, and scalable workflow that transforms experimentation into a production-ready system.
+
+
+
+## Workflow
+
+## 1. Experimentation
+
+- Initial experimentation was conducted using Google Colab.
+
+- Logged experiments in MLflow, hosted remotely on DagsHub.
+
+- Identified the best model through rigorous experimentation.
+
+## 2. Building the DVC Pipeline
+
+- Used VS Code for development.
+
+- Constructed a DVC pipeline for data tracking and model training.
+
+- Tracked data, models, and artifacts using DVC, storing them in AWS S3.
+
+- Integrated MLflow tracking within the DVC pipeline.
+
+- Registered the best model in the MLflow Model Registry using the pipeline.
+
+## 3. API Development & CI/CD
+
+- Developed an API service using FastAPI to serve the model.
+
+- Implemented GitHub Actions for CI/CD:
+
+- Tested model loading and performance.
+
+- Promoted the model to the production stage in the MLflow Model Registry if tests passed.
+
+- Built a Docker image of the FastAPI app and pushed it to AWS ECR.
+
+## 4. Deployment
+
+- Manually deployed the model using AWS Auto Scaling Group and Application Load Balancer.
+
+- Explored Kubernetes deployment using Minikube.
+
+- Technologies Used
+
+- Python (Data preprocessing, modeling, API development)
+
+- Google Colab (Experimentation)
+
+- MLflow (Experiment tracking, model registry)
+
+- DVC (Data and pipeline versioning)
+
+- AWS S3 (Data and model storage)
+
+- FastAPI (API development)
+
+- GitHub Actions (CI/CD)
+
+- AWS ECR (Docker image storage)
+
+- AWS Auto Scaling Group & Load Balancer (Model deployment)
+
+- Minikube (Local Kubernetes deployment)
+
 
 Project Organization
 ------------
