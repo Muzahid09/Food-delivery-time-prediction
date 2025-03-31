@@ -1,15 +1,15 @@
 ## Food-delivery-time-prediction
 ==============================
 
-## Project Overview
+## 📌Project Overview
 
 This repository contains my implementation of a machine learning pipeline to predict food delivery times in minutes, built with an MLOps approach. The goal was to create a reliable, reproducible, and scalable workflow that transforms experimentation into a production-ready system.
 
 
 
-## Workflow
+## 🔄Workflow
 
-## 1. Experimentation
+## 🧪 1. Experimentation
 
 - Initial experimentation was conducted using Google Colab.
 
@@ -17,7 +17,7 @@ This repository contains my implementation of a machine learning pipeline to pre
 
 - Identified the best model through rigorous experimentation.
 
-## 2. Building the DVC Pipeline
+## 🏗 2. Building the DVC Pipeline
 
 - Used VS Code for development.
 
@@ -29,7 +29,7 @@ This repository contains my implementation of a machine learning pipeline to pre
 
 - Registered the best model in the MLflow Model Registry using the pipeline.
 
-## 3. API Development & CI/CD
+## ⚡ 3. API Development & CI/CD
 
 - Developed an API service using FastAPI to serve the model.
 
@@ -41,13 +41,13 @@ This repository contains my implementation of a machine learning pipeline to pre
 
 - Built a Docker image of the FastAPI app and pushed it to AWS ECR.
 
-## 4. Deployment
+## ☁️ 4. Deployment
 
 - Manually deployed the model using AWS Auto Scaling Group and Application Load Balancer.
 
 - Explored Kubernetes deployment using Minikube.
 
-- Technologies Used
+## 🛠 Technologies Used
 
 - Python (Data preprocessing, modeling, API development)
 
