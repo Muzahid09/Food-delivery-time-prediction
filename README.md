@@ -5,6 +5,7 @@
 
 This repository contains my implementation of a machine learning pipeline to predict food delivery times in minutes, built with an MLOps approach. The goal was to create a reliable, reproducible, and scalable workflow that transforms experimentation into a production-ready system.
 
+![new_dvc](https://github.com/user-attachments/assets/7079bafe-6072-4862-b898-225189cb3a22)
 
 
 ## 🔄Workflow
